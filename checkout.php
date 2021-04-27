@@ -149,14 +149,28 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                         </div>
 
                         <div class="mb-3">
-                            <label for="adresse">Adresse</label>
-                            <input type="text" class="form-control" id="adresse" placeholder="1234 Main St" required="">
+                            <label for="strasse">Strasse + Hausnummer</label>
+                            <input type="text" class="form-control" id="strasse" placeholder="Musterstrasse 123" required="">
                             <div class="invalid-feedback">
                                 Please enter your shipping adresse.
                             </div>
                         </div>
 
                         <div class="row">
+                        <div class="col-md-3 mb-3">
+                                <label for="postleitzahl">Postleitzahl</label>
+                                <input type="text" class="form-control" id="postleitzahl" placeholder="" required="">
+                                <div class="invalid-feedback">
+                                    Postleitzahl required.
+                                </div>
+                            </div>
+                        <div class="col-md-5 mb-3">
+                                <label for="ort">Ort</label>
+                                <input type="text" class="form-control" id="ort" placeholder="" required="">
+                                <div class="invalid-feedback">
+                                    Ort required.
+                                </div>
+                            </div>
                             <div class="col-md-5 mb-3">
                                 <label for="land">Land</label>
                                 <select class="custom-select d-block w-100" id="land" required="">
@@ -170,13 +184,8 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                                     Please select a valid land.
                                 </div>
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="postleitzahl">Postleitzahl</label>
-                                <input type="text" class="form-control" id="postleitzahl" placeholder="" required="">
-                                <div class="invalid-feedback">
-                                    Postleitzahl code required.
-                                </div>
-                            </div>
+                            
+                            
                         </div>
                         <hr class="mb-4">
 
