@@ -184,80 +184,77 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                                     Please select a valid land.
                                 </div>
                             </div>
-                            <<<<<<< HEAD <div class="col-md-3 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="zip">Postleitzahl</label>
                                 <input type="text" class="form-control" id="zip" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Postleitzahl code required.
                                 </div>
-                        </div>
-                        =======
+                            </div>
 
+                        </div>
+                        <hr class="mb-4">
 
-                        >>>>>>> c509278c11eb14628ee71f38dde87249a8d6329d
-                </div>
-                <hr class="mb-4">
+                        <h4 class="mb-3">Zahlung</h4>
 
-                <h4 class="mb-3">Zahlung</h4>
-
-                <div class="d-block my-3">
-                    <div class="custom-control custom-radio">
-                        <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="checked" required="">
-                        <label class="custom-control-label" for="credit">Kreditkarte</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
-                        <label class="custom-control-label" for="debit">Bankkarte</label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
-                        <label class="custom-control-label" for="paypal">Paypal</label>
-                    </div>
+                        <div class="d-block my-3">
+                            <div class="custom-control custom-radio">
+                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="checked" required="">
+                                <label class="custom-control-label" for="credit">Kreditkarte</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                                <label class="custom-control-label" for="debit">Bankkarte</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                                <label class="custom-control-label" for="paypal">Paypal</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-name">Name</label>
+                                <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                                <small class="text-muted">Ganzer name wie auf der Karte</small>
+                                <div class="invalid-feedback">
+                                    Name on card is required
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-number">Kreditkarten nummer</label>
+                                <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                                <div class="invalid-feedback">
+                                    Credit card number is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-expiration">Ablaufdatum</label>
+                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                                <div class="invalid-feedback">
+                                    Expiration date required
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="cc-expiration">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                                <div class="invalid-feedback">
+                                    Security code required
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Weiter zum checkout</button>
+                    </form>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="cc-name">Name</label>
-                        <input type="text" class="form-control" id="cc-name" placeholder="" required="">
-                        <small class="text-muted">Ganzer name wie auf der Karte</small>
-                        <div class="invalid-feedback">
-                            Name on card is required
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="cc-number">Kreditkarten nummer</label>
-                        <input type="text" class="form-control" id="cc-number" placeholder="" required="">
-                        <div class="invalid-feedback">
-                            Credit card number is required
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 mb-3">
-                        <label for="cc-expiration">Ablaufdatum</label>
-                        <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
-                        <div class="invalid-feedback">
-                            Expiration date required
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="cc-expiration">CVV</label>
-                        <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
-                        <div class="invalid-feedback">
-                            Security code required
-                        </div>
-                    </div>
-                </div>
-                <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Weiter zum checkout</button>
-                </form>
             </div>
-    </div>
 
-    </main>
-    <footer>
-        <hr>
-        <p><a href="mailto:jpm@nobody.xyz?Subject=Quietschenten">Quietschenten-Shop © 2021</a></p>
-    </footer>
+        </main>
+        <footer>
+            <hr>
+            <p><a href="mailto:jpm@nobody.xyz?Subject=Quietschenten">Quietschenten-Shop © 2021</a></p>
+        </footer>
     </div>
     <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
