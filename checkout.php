@@ -125,15 +125,15 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                     <form class="needs-validation" novalidate="">
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="vorName">Vorname</label>
-                                <input type="text" class="form-control" id="vorName" placeholder="" required="">
+                                <label for="firstname">Vorname</label>
+                                <input type="text" class="form-control" id="firstname" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Valid Vorname is required.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="nachName">Nachname</label>
-                                <input type="text" class="form-control" id="nachName" placeholder="" required="">
+                                <label for="name">Nachname</label>
+                                <input type="text" class="form-control" id="name" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Valid Nachname is required.
                                 </div>
@@ -149,8 +149,8 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                         </div>
 
                         <div class="mb-3">
-                            <label for="adresse">Adresse</label>
-                            <input type="text" class="form-control" id="adresse" placeholder="1234 Main St" required="">
+                            <label for="address">Adresse</label>
+                            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
                             <div class="invalid-feedback">
                                 Please enter your shipping adresse.
                             </div>
@@ -158,8 +158,8 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
 
                         <div class="row">
                             <div class="col-md-5 mb-3">
-                                <label for="land">Land</label>
-                                <select class="custom-select d-block w-100" id="land" required="">
+                                <label for="country">Land</label>
+                                <select class="custom-select d-block w-100" id="country" required="">
                                     <option value="" selected="selected">Choose...</option>
                                     <option>United States</option>
                                     <option>Schweiz</option>
@@ -171,8 +171,8 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label for="postleitzahl">Postleitzahl</label>
-                                <input type="text" class="form-control" id="postleitzahl" placeholder="" required="">
+                                <label for="zip">Postleitzahl</label>
+                                <input type="text" class="form-control" id="zip" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Postleitzahl code required.
                                 </div>
