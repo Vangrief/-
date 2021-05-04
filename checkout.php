@@ -128,23 +128,23 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                                 <label for="firstname">Vorname</label>
                                 <input type="text" class="form-control" id="firstname" placeholder="" required="">
                                 <div class="invalid-feedback">
-                                    Valid Vorname is required.
+                                    gültiger Vorname is benötigt.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="name">Nachname</label>
                                 <input type="text" class="form-control" id="name" placeholder="" required="">
                                 <div class="invalid-feedback">
-                                    Valid Nachname is required.
+                                    gültiger Nachname is benötigt.
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                            <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                            <input type="email" class="form-control" id="email" placeholder="name@muster.com">
                             <div class="invalid-feedback">
-                                Please enter a valid email address for shipping updates.
+                                bitte geben sie eine gültige email address ein um versand updates zu erhalten.
                             </div>
                         </div>
 
@@ -152,7 +152,7 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                             <label for="address">Adresse</label>
                             <input type="text" class="form-control" id="address" placeholder="Mustertrasse 123" required="">
                             <div class="invalid-feedback">
-                                Please enter your shipping adresse.
+                                bitte geben sie eine gültige Adresse ein.
                             </div>
                         </div>
 
@@ -161,34 +161,34 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                                 <label for="postleitzahl">Postleitzahl</label>
                                 <input type="text" class="form-control" id="postleitzahl" placeholder="" required="">
                                 <div class="invalid-feedback">
-                                    Postleitzahl required.
+                                    Postleitzahl wird benötigt.
                                 </div>
                             </div>
                             <div class="col-md-5 mb-3">
                                 <label for="ort">Ort</label>
                                 <input type="text" class="form-control" id="ort" placeholder="" required="">
                                 <div class="invalid-feedback">
-                                    Ort required.
+                                    Ort wird benötigt.
                                 </div>
                             </div>
                             <div class="col-md-5 mb-3">
                                 <label for="country">Land</label>
                                 <select class="custom-select d-block w-100" id="country" required="">
-                                    <option value="" selected="selected">Choose...</option>
-                                    <option>United States</option>
+                                    <option value="" selected="selected">Auswählen...</option>
+                                    <option>Vereinigte Staaten</option>
                                     <option>Schweiz</option>
                                     <option>Deutschland</option>
                                     <option>Sowjetunion</option>
                                 </select>
                                 <div class="invalid-feedback">
-                                    Please select a valid land.
+                                    bitte wählen sie ein gültiges Land aus.
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="zip">Postleitzahl</label>
                                 <input type="text" class="form-control" id="zip" placeholder="" required="">
                                 <div class="invalid-feedback">
-                                    Postleitzahl code required.
+                                    Postleitzahl wird benötigt.
                                 </div>
                             </div>
 
@@ -210,6 +210,10 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                                 <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
                                 <label class="custom-control-label" for="paypal">Paypal</label>
                             </div>
+                            <div class="custom-control custom-radio">
+                                <input id="twint" name="paymentMethod" type="radio" class="custom-control-input" required="">
+                                <label class="custom-control-label" for="twint">Twint</label>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
@@ -217,14 +221,14 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                                 <input type="text" class="form-control" id="cc-name" placeholder="" required="">
                                 <small class="text-muted">Ganzer name wie auf der Karte</small>
                                 <div class="invalid-feedback">
-                                    Name on card is required
+                                    Name wird benötigt.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="cc-number">Kreditkarten nummer</label>
+                                <label for="cc-number">Kreditkartennummer</label>
                                 <input type="text" class="form-control" id="cc-number" placeholder="" required="">
                                 <div class="invalid-feedback">
-                                    Credit card number is required
+                                    Kreditkartennummer wird benötigt.
                                 </div>
                             </div>
                         </div>
@@ -233,19 +237,19 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                                 <label for="cc-expiration">Ablaufdatum</label>
                                 <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
                                 <div class="invalid-feedback">
-                                    Expiration date required
+                                    Ablaufdatum wird benötigt.
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="cc-expiration">CVV</label>
                                 <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
                                 <div class="invalid-feedback">
-                                    Security code required
+                                    CVV wird benötigt.
                                 </div>
                             </div>
                         </div>
                         <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Weiter zum checkout</button>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Weiter zum Checkout</button>
                     </form>
                 </div>
             </div>
