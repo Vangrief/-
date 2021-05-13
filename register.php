@@ -6,6 +6,42 @@ session_start();
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
 }
+if (isset($_SESSION['currentBenutzer'])) {
+    echo $_SESSION['currentBenutzer'];
+}
+
+// Taking all values from the form data(input)
+if (isset($_POST['benutzername']) && isset($_POST['pwssd'])) {
+    $benutzername =  $_POST['benutzername'];
+    $password = $_POST['pwssd'];
+    echo $password;
+    if ($password == $_POST['pwssd2']) {
+        //Datenbank
+        $dbdir = './db';
+        /* Datenbankdatei ausserhalb htdocs öffnen bzw. erzeugen */
+        $db = new SQLite3("$dbdir/sq3.db");
+
+        $statement = $db->prepare('SELECT * FROM personen WHERE benutzername = :id;');
+        $statement->bindValue(':id', $benutzername);
+        $result = $statement->execute();
+        $result = $result->fetchArray();
+        if (!empty($result)) {
+            /*Benuter exists*/
+            $verkackt = true;
+        } else {
+            $benutzerid = idate("B") . idate("s") . random_int(0, 1000000);
+            $password = password_hash($password, PASSWORD_DEFAULT);
+
+            $_SESSION['currentBenutzer'] = $benutzername;
+            $sqlstr = "INSERT INTO personen (benutzerId, benutzername, pwssd) VALUES ";
+            $db->query($sqlstr . "('$benutzerid', '$benutzername', '$password')");
+        }
+    } else {
+        $verkackt = true;
+    }
+} else {
+    echo "geht nicht";
+}
 ?>
 
 <html lang="de">
@@ -36,15 +72,21 @@ if (!isset($_SESSION['cart'])) {
         <main>
             <h1>Registrieren</h1>
 
-            <form action="/action_page.php">
-                <label for="fname">Benutzername</label>
-                <input type="text" id="fname" name="fname"><br><br>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <label for="benutzername">Benutzername</label>
+                <input type="text" name="benutzername" id="benutzername"><br><br>
                 <label for="lname">Passwort</label>
                 <input type="password" id="pwssd" name="pwssd"><br>
                 <label for="lname">Passwort</label>
-                <input type="password" id="pwssd" name="pwssd"><br><br>
+                <input type="password" id="pwssd2" name="pwssd2"><br><br>
                 <input type="submit" value="Submit">
             </form>
+
+            <?php
+            if (isset($verkackt)) {
+                echo "<p style='color: red;'>Die Registrierung ist fehlgeschlagen<p>";
+            }
+            ?>
 
             <p>
                 Sie haben schon ein Konto?

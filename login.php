@@ -6,6 +6,41 @@ session_start();
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
 }
+if (isset($_SESSION['currentBenutzer'])) {
+    echo $_SESSION['currentBenutzer'];
+}
+
+// Taking all values from the form data(input)
+if (isset($_REQUEST['benutzername']) && isset($_REQUEST['pwssd'])) {
+    $benutzername =  $_REQUEST['benutzername'];
+    $password = $_REQUEST['pwssd'];
+    if (true == true) {
+        $benutzerid = idate("B") . idate("s") . random_int(0, 1000000);
+        $password = password_hash($password, PASSWORD_DEFAULT);
+
+        $_SESSION['currentBenutzer'] = $benutzername;
+
+        //Datenbank
+        $dbdir = './db';
+        /* Datenbankdatei ausserhalb htdocs öffnen bzw. erzeugen */
+        $db = new SQLite3("$dbdir/sq3.db");
+
+        $res = $db->query("SELECT * FROM personen where ".$benutzername);
+        /* Abfrageergebnis ausgeben */
+        while ($dsatz = $res->fetchArray(SQLITE3_ASSOC)) {
+            echo $dsatz["benutzerId"] . ", "
+                . $dsatz["benutzername"] . ", "
+                . $dsatz["pwssd"] . ", "
+                . $dsatz["vorname"] . ", "
+                . $dsatz["nachname"] . "\n";
+            echo "<br>";
+        }
+    } else {
+        $verkackt = true;
+    }
+} else {
+    echo "geht nicht";
+}
 ?>
 
 <html lang="de">
@@ -36,9 +71,9 @@ if (!isset($_SESSION['cart'])) {
         <main>
             <h1>Login</h1>
 
-            <form action="/action_page.php">
-                <label for="fname">Benutzername</label>
-                <input type="text" id="fname" name="fname"><br><br>
+            <form action="login.php" method="post">
+                <label for="benutzername">Benutzername</label>
+                <input type="text" id="benutzername" name="benutzername"><br><br>
                 <label for="lname">Passwort</label>
                 <input type="password" id="pwssd" name="pwssd"><br><br>
                 <input type="submit" value="Submit">
@@ -49,7 +84,7 @@ if (!isset($_SESSION['cart'])) {
                 <a href="register.php">Registrieren</a>
             </p>
 
-           
+
         </main>
         <footer>
             <hr>
