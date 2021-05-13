@@ -223,7 +223,7 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="postleitzahl">Postleitzahl</label>
-                                <input type="text" class="form-control" id="postleitzahl" name="plz" placeholder="" required="" value="<?php echo $LPlz; ?>">
+                                <input type="number" class="form-control" id="postleitzahl" name="plz" placeholder="" required="" value="<?php echo $LPlz; ?>">
                                 <div class="invalid-feedback">
                                     Postleitzahl wird benötigt.
                                 </div>
@@ -283,7 +283,7 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="cc-number">Kreditkartennummer</label>
-                                <input type="text" class="form-control" id="cc-number" name="cc-number" placeholder="" required="">
+                                <input type="number" class="form-control" id="cc-number" name="cc-number" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Kreditkartennummer wird benötigt.
                                 </div>
@@ -292,14 +292,14 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="cc-expiration">Ablaufdatum</label>
-                                <input type="text" class="form-control" id="cc-expiration" name="cc-expiration" placeholder="" required="">
+                                <input type="number" class="form-control" id="cc-expiration" name="cc-expiration" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Ablaufdatum wird benötigt.
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="cc-expiration">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" name="cc-cvv" placeholder="" required="">
+                                <input type="text" class="form-control" id="cc-cvv" name="cc-cvv" placeholder="xx/xx" required="">
                                 <div class="invalid-feedback">
                                     CVV wird benötigt.
                                 </div>

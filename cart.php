@@ -5,6 +5,7 @@ session_start();
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
 }
+
 if (isset($_GET['empty'])) {
     // Empty the $_SESSION['cart'] array
     unset($_SESSION['cart']);

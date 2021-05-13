@@ -7,7 +7,7 @@ session_start();
 if (isset($_REQUEST['benutzername']) && isset($_REQUEST['pwssd'])) {
     $benutzername =  $_REQUEST['benutzername'];
     $password = $_REQUEST['pwssd'];
-    if (true == true) {   
+    if (true == true) {
         $dbdir = './db';
         /* Datenbankdatei ausserhalb htdocs öffnen bzw. erzeugen */
         $db = new SQLite3("$dbdir/sq3.db");
@@ -20,6 +20,91 @@ if (isset($_REQUEST['benutzername']) && isset($_REQUEST['pwssd'])) {
             /*Benuter exists*/
             if (password_verify($_REQUEST['pwssd'], $result["pwssd"])) {
                 $_SESSION['currentBenutzer'] = $benutzername;
+
+
+                
+
+                $res = $db->query('SELECT * FROM bestellungen WHERE benutzername = "' . $_SESSION['currentBenutzer'] . '"');
+                if (0 == 0) {
+                    echo '         
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Beschreibung</th>
+                                <th>Stückzahl</th>
+                                <th>Preis (CHF)</th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+
+                    while ($dsatz = $res->fetchArray(SQLITE3_ASSOC)) {
+                        $items = [
+                            [
+                                "name" => "Quietschente rot",
+                                "count" => 0,
+                                "price" => 6.95,
+                            ],
+                            [
+                                "name" => "Quietschente blau",
+                                "count" => 0,
+                                "price" => 6.95,
+                            ],
+                            [
+                                "name" => "Quietschente gelb",
+                                "count" => 0,
+                                "price" => 6.95,
+                            ],
+                            [
+                                "name" => "Quietschente silber",
+                                "count" => 0,
+                                "price" => 8.95,
+                            ],
+                            [
+                                "name" => "Quietschente gold",
+                                "count" => 0,
+                                "price" => 11.95,
+                            ],
+                        ];
+
+                        $obj = json_decode($dsatz["BOrders"]);
+                        //echo $obj;
+
+                        for ($i = 0; $i < count($obj); $i++) {
+                            $itemIndex = $obj[$i];
+                            $items[$itemIndex]["count"] += 1;
+                        }
+                        $total = 0;
+                        for ($i = 0; $i < count($items); $i++) {
+                            if ($items[$i]["count"] == 0) {
+                                continue;
+                            }
+                            echo '<tr>';
+                            echo '<td>' . $items[$i]["name"] . '</td>';
+                            echo '<td align="center">' . $items[$i]["count"] . '</td>';
+                            echo '<td align="right">';
+                            echo number_format($items[$i]["price"] * $items[$i]["count"], 2);
+                            echo '</td>';
+                            echo '</tr>';
+                            $total += $items[$i]["price"] * $items[$i]["count"];
+                        }
+
+                        echo '<tr>
+                        <th>Beschreibung</th>
+                        <th>Stückzahl</th>
+                        <th>Preis (CHF)</th>
+                    </tr>';
+                    }
+                    echo '
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th align="right">Total:</th>
+                                <th align="right">' . number_format($total, 2) . '</th>
+                            </tr>
+                        </tfoot>
+                    </table>';
+                }
             } else {
                 unset($_SESSION['currentBenutzer']);
                 $verkackt = "Falsches Passwort oder falscher Name";
@@ -80,7 +165,7 @@ if (isset($_SESSION['currentBenutzer'])) {
 
             <?php
             if (isset($verkackt)) {
-                echo "<p style='color: red;'>".$verkackt."<p>";
+                echo "<p style='color: red;'>" . $verkackt . "<p>";
             }
             ?>
 
