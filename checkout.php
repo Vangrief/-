@@ -3,6 +3,69 @@
 <?php
 session_start();
 
+$vorname = "";
+    $nachname = "";
+    $email = "";
+    $LStrasse = "";
+    $LPlz = "";
+    $LOrt = "";
+    $LLand = "";
+
+if (isset($_SESSION['currentBenutzer'])) {
+    echo $_SESSION['currentBenutzer'];
+
+    $dbdir = './db';
+        /* Datenbankdatei ausserhalb htdocs öffnen bzw. erzeugen */
+    $db = new SQLite3("$dbdir/sq3.db");
+
+    if (isset($_REQUEST['firstname']) && $_POST['firstname'] != "") {                
+        //$con = new PDO("$dbdir/sq3.db");
+        $db->exec('UPDATE personen SET '.
+        'vorname = "'.$_REQUEST['firstname'].'",'.
+        'nachname = "'.$_REQUEST['lastname'].'",'.
+        'email = "'.$_REQUEST['email'].'",'.
+        'LStrasse = "'.$_REQUEST['address'].'",'.
+        'LPlz = "'.$_REQUEST['plz'].'",'.
+        'LOrt = "'.$_REQUEST['ort'].'",'.
+        'LLand = "'.$_REQUEST['country'].'"'.
+        ' WHERE benutzername = "'.$_SESSION['currentBenutzer'].'";');
+
+        /*
+        echo 'UPDATE personen SET '.
+        'vorname = "'.$_REQUEST['firstname'].'",'.
+        'nachname = "'.$_REQUEST['lastname'].'",'.
+        'email = "'.$_REQUEST['email'].'",'.
+        'LStrasse = "'.$_REQUEST['address'].'",'.
+        'LPlz = "'.$_REQUEST['plz'].'",'.
+        'LOrt = "'.$_REQUEST['ort'].'",'.
+        'LLand = "'.$_REQUEST['country'].'"'.
+        ' WHERE benutzername = "'.$_SESSION['currentBenutzer'].'";';*/
+
+        $sqlstr = "INSERT INTO bestellungen (bestId, benutzername, BOrders) VALUES ";
+        $db->query($sqlstr . "(null, '".$_SESSION['currentBenutzer']."', '".json_encode($_SESSION['cart'])."')");
+
+        unset($_POST);
+        unset($_REQUEST);
+        unset($_SESSION['cart']);
+        header("Location: index.php");
+    } else {
+        $res = $db->query('SELECT * FROM personen WHERE benutzername = "'.$_SESSION['currentBenutzer'].'"');
+        while ($dsatz = $res->fetchArray(SQLITE3_ASSOC)) {
+            $vorname = $dsatz["vorname"];
+            $nachname = $dsatz["nachname"];
+            $email = $dsatz["email"];
+            $LStrasse = $dsatz["LStrasse"];
+            $LPlz = $dsatz["LPlz"];
+            $LOrt = $dsatz["LOrt"];
+            $LLand = $dsatz["LLand"];
+        }
+    }
+} else {  
+    unset($_SESSION['currentBenutzer']);
+    header("Location: login.php");
+    exit;
+}
+
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
 }
@@ -64,7 +127,7 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="./css/custom.css">
 
 </head>
 
@@ -78,6 +141,7 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                 <li><a href="index.php"><b>Startseite</b></a></li>
                 <li><a href="catalog.php">Katalog</a></li>
                 <li><a href="cart.php"><i class="fa fa-shopping-cart" style="font-size:20px"></i> <?php echo count($_SESSION['cart']); ?></a></li>
+                <li><a href="login.php">Login</a></li>
             </ul>
         </nav>
         <main>
@@ -122,18 +186,18 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                 </div>
                 <div class="col-md-8 order-md-1">
                     <h4 class="mb-3">Adresse</h4>
-                    <form class="needs-validation" novalidate="">
+                    <form class="needs-validation" novalidate="" action="checkout.php" method="post">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="firstname">Vorname</label>
-                                <input type="text" class="form-control" id="firstname" placeholder="" required="">
+                                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="" required="" value="<?php echo $vorname; ?>">
                                 <div class="invalid-feedback">
                                     gültiger Vorname is benötigt.
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="name">Nachname</label>
-                                <input type="text" class="form-control" id="name" placeholder="" required="">
+                                <input type="text" class="form-control" id="name" name="lastname" placeholder="" required="" value="<?php echo $nachname; ?>">
                                 <div class="invalid-feedback">
                                     gültiger Nachname is benötigt.
                                 </div>
@@ -142,7 +206,7 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
 
                         <div class="mb-3">
                             <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                            <input type="email" class="form-control" id="email" placeholder="name@muster.com">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="name@muster.com" value="<?php echo $email; ?>">
                             <div class="invalid-feedback">
                                 bitte geben sie eine gültige email address ein um versand updates zu erhalten.
                             </div>
@@ -150,7 +214,7 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
 
                         <div class="mb-3">
                             <label for="address">Adresse</label>
-                            <input type="text" class="form-control" id="address" placeholder="Mustertrasse 123" required="">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Mustertrasse 123" required="" value="<?php echo $LStrasse; ?>">
                             <div class="invalid-feedback">
                                 bitte geben sie eine gültige Adresse ein.
                             </div>
@@ -159,36 +223,29 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="postleitzahl">Postleitzahl</label>
-                                <input type="text" class="form-control" id="postleitzahl" placeholder="" required="">
+                                <input type="text" class="form-control" id="postleitzahl" name="plz" placeholder="" required="" value="<?php echo $LPlz; ?>">
                                 <div class="invalid-feedback">
                                     Postleitzahl wird benötigt.
                                 </div>
                             </div>
                             <div class="col-md-5 mb-3">
                                 <label for="ort">Ort</label>
-                                <input type="text" class="form-control" id="ort" placeholder="" required="">
+                                <input type="text" class="form-control" id="ort" name="ort" placeholder="" required="" value="<?php echo $LOrt; ?>">
                                 <div class="invalid-feedback">
                                     Ort wird benötigt.
                                 </div>
                             </div>
                             <div class="col-md-5 mb-3">
                                 <label for="country">Land</label>
-                                <select class="custom-select d-block w-100" id="country" required="">
+                                <select class="custom-select d-block w-100" id="country" name="country" required="">
                                     <option value="" selected="selected">Auswählen...</option>
-                                    <option>Vereinigte Staaten</option>
-                                    <option>Schweiz</option>
-                                    <option>Deutschland</option>
-                                    <option>Sowjetunion</option>
+                                    <option <?php if ($LLand == 'Vereinigte Staaten') echo ' selected="selected"'; ?>>Vereinigte Staaten</option>
+                                    <option <?php if ($LLand == 'Schweiz') echo ' selected="selected"'; ?>>Schweiz</option>
+                                    <option <?php if ($LLand == 'Deutschland') echo ' selected="selected"'; ?>>Deutschland</option>
+                                    <option <?php if ($LLand == 'Sowjetunion') echo ' selected="selected"'; ?>>Sowjetunion</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     bitte wählen sie ein gültiges Land aus.
-                                </div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="zip">Postleitzahl</label>
-                                <input type="text" class="form-control" id="zip" placeholder="" required="">
-                                <div class="invalid-feedback">
-                                    Postleitzahl wird benötigt.
                                 </div>
                             </div>
 
@@ -218,7 +275,7 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="cc-name">Name</label>
-                                <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+                                <input type="text" class="form-control" id="cc-name" name="cc-name" placeholder="" required="">
                                 <small class="text-muted">Ganzer name wie auf der Karte</small>
                                 <div class="invalid-feedback">
                                     Name wird benötigt.
@@ -226,7 +283,7 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="cc-number">Kreditkartennummer</label>
-                                <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                                <input type="text" class="form-control" id="cc-number" name="cc-number" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Kreditkartennummer wird benötigt.
                                 </div>
@@ -235,14 +292,14 @@ for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
                         <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="cc-expiration">Ablaufdatum</label>
-                                <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                                <input type="text" class="form-control" id="cc-expiration" name="cc-expiration" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     Ablaufdatum wird benötigt.
                                 </div>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="cc-expiration">CVV</label>
-                                <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                                <input type="text" class="form-control" id="cc-cvv" name="cc-cvv" placeholder="" required="">
                                 <div class="invalid-feedback">
                                     CVV wird benötigt.
                                 </div>

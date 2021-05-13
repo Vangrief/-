@@ -4,7 +4,9 @@
     $db = new SQLite3("$dbdir/sq3.db");
 
     /* Tabelle mit Primärschlüssel erzeugen */
-    $db->exec("CREATE TABLE personen (benutzerId, benutzername TEXT PRIMARY KEY, pwssd, vorname , nachname, email, LStrasse, LPlz, LOrt);");
+    $db->exec("CREATE TABLE personen (benutzerId, benutzername TEXT PRIMARY KEY, pwssd, vorname , nachname, email, LStrasse, LPlz, LOrt, LLand, BOrders JSON);");
+
+    $db->exec("CREATE TABLE bestellungen (bestId INTEGER PRIMARY KEY AUTOINCREMENT, benutzername , BOrders JSON);");
 
     /* Drei Datensätze eintragen
     $sqlstr = "INSERT INTO Tpersonen (name, vorname, " . "personalnummer, gehalt, geburtstag) VALUES ";

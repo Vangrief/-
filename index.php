@@ -29,6 +29,7 @@ if (!isset($_SESSION['cart'])) {
                     <li><a href="index.php"><b>Startseite</b></a></li>
                     <li><a href="catalog.php">Katalog</a></li>
                     <li><a href="cart.php"><i class="fa fa-shopping-cart" style="font-size:20px"></i> (<?php echo count($_SESSION['cart']); ?>)</a></li>
+                    <li><a href="login.php">Login</a></li>
                 </ul>
             </nav>
             <main>

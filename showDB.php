@@ -13,9 +13,26 @@ $dbdir = './db';
      . $dsatz["benutzername"] . ", "
      . $dsatz["pwssd"] . ", "
      . $dsatz["vorname"] . ", "
-     . $dsatz["nachname"] . "\n";
+     . $dsatz["nachname"] . ", "
+     . $dsatz["email"] . ", "
+     . $dsatz["LStrasse"] . ", "
+     . $dsatz["LPlz"] . ", "
+     . $dsatz["LOrt"] . ", "
+     . $dsatz["LLand"] . ", "
+     . $dsatz["BOrders"] . "\n";
      echo "<br>";
    }
+
+   $res = $db->query("SELECT * FROM bestellungen");
+
+  /* Abfrageergebnis ausgeben */
+  while ($dsatz = $res->fetchArray(SQLITE3_ASSOC)) {
+     echo $dsatz["bestId"] . ", "
+     . $dsatz["benutzername"] . ", "
+     . $dsatz["BOrders"] . "\n";
+     echo "<br>";
+   }
+
    /* Verbindung zur Datenbankdatei wieder lösen */
    $db->close();
    ?>

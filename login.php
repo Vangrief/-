@@ -3,43 +3,42 @@
 <?php
 session_start();
 
+// Taking all values from the form data(input)
+if (isset($_REQUEST['benutzername']) && isset($_REQUEST['pwssd'])) {
+    $benutzername =  $_REQUEST['benutzername'];
+    $password = $_REQUEST['pwssd'];
+    if (true == true) {   
+        $dbdir = './db';
+        /* Datenbankdatei ausserhalb htdocs öffnen bzw. erzeugen */
+        $db = new SQLite3("$dbdir/sq3.db");
+
+        $statement = $db->prepare('SELECT * FROM personen WHERE benutzername = :id;');
+        $statement->bindValue(':id', $benutzername);
+        $result = $statement->execute();
+        $result = $result->fetchArray();
+        if (!empty($result)) {
+            /*Benuter exists*/
+            if (password_verify($_REQUEST['pwssd'], $result["pwssd"])) {
+                $_SESSION['currentBenutzer'] = $benutzername;
+            } else {
+                unset($_SESSION['currentBenutzer']);
+                $verkackt = "Falsches Passwort oder falscher Name";
+            }
+        } else {
+            $verkackt = "Falsches Passwort oder falscher Name";
+        }
+    } else {
+        $verkackt = true;
+    }
+}
+
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
 }
 if (isset($_SESSION['currentBenutzer'])) {
     echo $_SESSION['currentBenutzer'];
-}
-
-// Taking all values from the form data(input)
-if (isset($_REQUEST['benutzername']) && isset($_REQUEST['pwssd'])) {
-    $benutzername =  $_REQUEST['benutzername'];
-    $password = $_REQUEST['pwssd'];
-    if (true == true) {
-        $benutzerid = idate("B") . idate("s") . random_int(0, 1000000);
-        $password = password_hash($password, PASSWORD_DEFAULT);
-
-        $_SESSION['currentBenutzer'] = $benutzername;
-
-        //Datenbank
-        $dbdir = './db';
-        /* Datenbankdatei ausserhalb htdocs öffnen bzw. erzeugen */
-        $db = new SQLite3("$dbdir/sq3.db");
-
-        $res = $db->query("SELECT * FROM personen where ".$benutzername);
-        /* Abfrageergebnis ausgeben */
-        while ($dsatz = $res->fetchArray(SQLITE3_ASSOC)) {
-            echo $dsatz["benutzerId"] . ", "
-                . $dsatz["benutzername"] . ", "
-                . $dsatz["pwssd"] . ", "
-                . $dsatz["vorname"] . ", "
-                . $dsatz["nachname"] . "\n";
-            echo "<br>";
-        }
-    } else {
-        $verkackt = true;
-    }
 } else {
-    echo "geht nicht";
+    unset($_SESSION['currentBenutzer']);
 }
 ?>
 
@@ -78,6 +77,12 @@ if (isset($_REQUEST['benutzername']) && isset($_REQUEST['pwssd'])) {
                 <input type="password" id="pwssd" name="pwssd"><br><br>
                 <input type="submit" value="Submit">
             </form>
+
+            <?php
+            if (isset($verkackt)) {
+                echo "<p style='color: red;'>".$verkackt."<p>";
+            }
+            ?>
 
             <p>
                 Sie haben noch kein Konto?

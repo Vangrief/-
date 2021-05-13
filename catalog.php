@@ -35,6 +35,7 @@ if (isset($_GET['buy'])) {
                     <li><a href="index.php">Startseite</a></li>
                     <li><a href="catalog.php"><b>Katalog</b></a></li>
                     <li><a href="cart.php"><i class="fa fa-shopping-cart" style="font-size:20px"></i> (<?php echo count($_SESSION['cart']); ?>)</a></li>
+                    <li><a href="login.php">Login</a></li>
                 </ul>
             </nav>
             <main>
